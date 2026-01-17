@@ -16,15 +16,16 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item active">
-                    <i class="bi bi-plus-lg"></i> Add Product
+                    <i class="bi bi-pencil-square"></i> Edit Product
                 </li>
             </ol>
         </nav>
 
         <!-- Form Section -->
         <div class="bg-white p-5 rounded-bottom shadow-sm border">
-            <form method="POST" action="{{ route('products.store') }}">
+            <form method="POST" action="{{ route('products.update', $product) }}">
                 @csrf
+                @method('PUT')
 
                 <!-- Product Name -->
                 <div class="mb-4">
@@ -35,8 +36,7 @@
                     <input type="text"
                            name="name"
                            class="form-control @error('name') is-invalid @enderror"
-                           placeholder="Enter product name..."
-                           value="{{ old('name') }}"
+                           value="{{ old('name', $product->name) }}"
                            required>
                     @error('name')
                     <div class="invalid-feedback">
@@ -54,8 +54,7 @@
                     <input type="number"
                            name="price"
                            class="form-control @error('price') is-invalid @enderror"
-                           placeholder="Enter price..."
-                           value="{{ old('price') }}"
+                           value="{{ old('price', $product->price) }}"
                            required>
                     @error('price')
                     <div class="invalid-feedback">
@@ -76,7 +75,7 @@
                         <option value="">-- Select Category --</option>
                         @foreach($categories as $cat)
                             <option value="{{ $cat->id }}"
-                                {{ old('category_id') == $cat->id ? 'selected' : '' }}>
+                                {{ old('category_id', $product->category_id) == $cat->id ? 'selected' : '' }}>
                                 {{ $cat->name }}
                             </option>
                         @endforeach
@@ -92,8 +91,8 @@
 
                 <!-- Actions -->
                 <div class="d-flex gap-3">
-                    <button type="submit" class="btn btn-success shadow">
-                        <i class="bi bi-check-circle-fill"></i> Save Product
+                    <button type="submit" class="btn btn-primary shadow">
+                        <i class="bi bi-save-fill"></i> Update Product
                     </button>
                     <a href="{{ route('products.index') }}" class="btn btn-outline-secondary">
                         <i class="bi bi-x-circle"></i> Cancel
@@ -103,4 +102,3 @@
         </div>
     </div>
 @endsection
-

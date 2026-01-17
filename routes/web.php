@@ -13,10 +13,9 @@ use App\Http\Controllers\ProductController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/', function () {
+    return redirect()->route('categories.index');
+});
 
 Route::resource('categories', CategoryController::class);
 Route::resource('products', ProductController::class);
-
-Route::get('/', function () {
-    return view('welcome');
-});
